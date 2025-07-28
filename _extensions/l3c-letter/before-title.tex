@@ -1,0 +1,166 @@
+\newcommand{\logofile}{}
+\DeclareOption{color}{%
+    \definecolor{crimson}{RGB}{0,100,55}
+    \definecolor{gray}{RGB}{94,106,113} % {HTML}{5e6a71}
+    \renewcommand{\logofile}{logoUQTR.png}
+}
+
+\ExecuteOptions{color}
+
+\ProcessOptions{\relax}
+
+% UTF-8 input encoding
+\RequirePackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+% Measurements from university guide
+\RequirePackage[absolute]{textpos}
+\RequirePackage{soul}
+\RequirePackage{tikz}
+% A nice serif font (palatino), but not the prescribed nonfree ITC stone
+\RequirePackage[sc,osf]{mathpazo}
+% Header and footer formatting
+\RequirePackage{fancyhdr}
+% Enable LaTeX3 interface for key-value pairs
+\RequirePackage{xparse}
+% For substring operations
+\usepackage{xstring}
+%% Command definitions
+\newcommand{\lastword}[1]{%
+    \StrCount{#1}{\space}[\dotnum]%
+    \StrBehind[\dotnum]{#1}{\space}
+}
+% Key-value store
+\ExplSyntaxOn 
+\prop_new:N \list_prop
+\keys_define:nn {coverletter} {%
+    fromname    .code:n={ \prop_put:Nnn \list_prop {fromname}    {#1} },
+    fromdegree  .code:n={ \prop_put:Nnn \list_prop {fromdegree}  {#1} },
+    fromrole    .code:n={ \prop_put:Nnn \list_prop {fromrole}    {#1} },
+    fromdept    .code:n={ \prop_put:Nnn \list_prop {fromdept}    {#1} },
+    fromuni     .code:n={ \prop_put:Nnn \list_prop {fromuni}     {#1} },
+    fromcity    .code:n={ \prop_put:Nnn \list_prop {fromcity}    {#1} },
+    fromstreet  .code:n={ \prop_put:Nnn \list_prop {fromstreet}  {#1} },
+    fromtel     .code:n={ \prop_put:Nnn \list_prop {fromtel}     {#1} },
+    fromcountry .code:n={ \prop_put:Nnn \list_prop {fromcountry} {#1} },
+    fromfax     .code:n={ \prop_put:Nnn \list_prop {fromfax}     {#1} },
+    fromemail   .code:n={ \prop_put:Nnn \list_prop {fromemail}   {#1} },
+    fromweb     .code:n={ \prop_put:Nnn \list_prop {fromweb}     {#1} },
+    %
+    toname      .code:n={ \prop_put:Nnn \list_prop {toname}      {#1} },
+    totitle     .code:n={ \prop_put:Nnn \list_prop {totitle}     {#1} },
+    torole      .code:n={ \prop_put:Nnn \list_prop {torole}      {#1} },
+    todept      .code:n={ \prop_put:Nnn \list_prop {todept}      {#1} },
+    touni       .code:n={ \prop_put:Nnn \list_prop {touni}       {#1} },
+    tocity      .code:n={ \prop_put:Nnn \list_prop {tocity}      {#1} },
+    tostreet    .code:n={ \prop_put:Nnn \list_prop {tostreet}    {#1} },
+    tocountry   .code:n={ \prop_put:Nnn \list_prop {tocountry}   {#1} },
+    %
+    date        .code:n={ \prop_put:Nnn \list_prop {date}        {#1} },
+    signature   .code:n={ \prop_put:Nnn \list_prop {signature}   {#1} },
+    opening	.code:n={ \prop_put:Nnn \list_prop {opening}   	 {#1} }
+}
+
+% Setter and getter; top function was formerly SetLetterData
+\NewDocumentCommand{\update}{+m}{%
+    \keys_set:nn {coverletter} {#1}%
+}
+\cs_new:Npn \getvalue#1{%
+    \prop_item:Nn \list_prop {#1}
+}
+\ExplSyntaxOff
+
+% Default values
+%%%%%%%%%%%%%%%%%%%%%%%% FOR MODIFICATION %%%%%%%%%%%%%%%%%%%%%%%%
+\update{%
+    fromname={Guillaume Vallet}, 
+    fromdegree={Ph.D.},
+    fromrole={Professeur adjoint}, 
+    fromdept={Département de Psychologie},
+    fromuni={Université du Québec à Trois-Rivières},
+    fromcity={Trois-Rivières, QC, G9A 5H7},
+    fromstreet={Bureau 2020, 600 rue Sainte-Marguerite},
+    fromcountry={CA},
+    fromtel={+1 (819) 376-5011 \#3511},
+    fromfax={},
+    fromemail={\href{mailto:guillaume.vallet@uqtr.ca}{guillaume.vallet@uqtr.ca}},
+    fromweb={\url{https://gtvallet.com}},
+    % 
+    toname={},
+    totitle={},
+    torole={},
+    todept={},
+    touni={},
+    tostreet={},
+    tocity={},
+    tocountry={},
+    %
+    signature={}
+}
+%%%%%%%%%%%%%%%%%%%%%%%% FOR MODIFICATION %%%%%%%%%%%%%%%%%%%%%%%%
+
+% Opening and closing phrases
+\renewcommand{\opening}[1][Cher/Chère]{$opening$}
+\renewcommand{\closing}[1]{
+  \vspace{.5cm}
+  $closing$\\[0.3cm]\hspace*{.5cm}
+  $if(signature)$
+    \includegraphics[height=2cm]{$signature$}
+  $else$
+    \vspace{1.7cm}
+  $endif$\\
+  \hspace{.9cm}\noindent
+  \begin{minipage}{4cm}
+    \sffamily\small\color{gray}\setstretch{1}
+    $author$, $qualification$\\
+    $status$ 
+  \end{minipage}
+}
+
+% Linked files
+%\newcommand{\signature}{} % your signature
+%\newcommand{\enclosure}{} % any enclosures
+
+%% Body of the class, most of the declarations appear here
+% Horizontal line, font, and header/footer style
+\usetikzlibrary{calc}
+\linespread{1.05}
+
+% Remove paragraph indentation
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8\baselineskip}
+\raggedright
+
+% Set the URL style
+\urlstyle{sf}
+\fancypagestyle{main}{%
+    \fancyhf{} % clear the existing header and footer
+    % define the header
+    \fancyhead[L]{%
+        \begin{textblock*}{2in}[0.3066,0.37](1.5in,1in)
+            \includegraphics[width=2in]{\logofile}
+        \end{textblock*}
+        \begin{textblock*}{6.375in}(1.5in,1.05in) 
+            \sffamily
+            \hfill \color{gray} Département de Psychologie
+            \\  \hfill $author$, $qualification$
+        \end{textblock*}
+        \begin{tikzpicture}[remember picture,overlay]
+          \draw[color=crimson,line width=0.7pt] (current page.north west)+(1.5in,-1in) -- (6.41in,-0.15in);
+        \end{tikzpicture}
+    }
+    
+    % define the footer
+    \fancyfoot[L]{%
+      {\footnotesize \color{gray} \sffamily
+           \getvalue{fromstreet}, \getvalue{fromcity} \\[-0.1\baselineskip]
+           \getvalue{fromtel}\ \textbullet\ \getvalue{fromemail}\ \textbullet\ \getvalue{fromweb}} \color{black}
+    }
+    \fancyfoot[R]{%
+       \begin{textblock*}{2in}(14.6cm, 25.5cm)
+            \includegraphics[width=2.2cm]{logoL3C.png}
+       \end{textblock*}
+    }
+    % define the line thickness
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}

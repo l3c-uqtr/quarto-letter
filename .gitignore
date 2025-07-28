@@ -1,0 +1,7 @@
+.DS_Store
+template_files/
+template.tex
+.Rproj.user
+.quarto/
+*.png
+/.quarto/
