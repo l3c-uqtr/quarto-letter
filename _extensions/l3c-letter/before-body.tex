@@ -1,8 +1,14 @@
 \pagestyle{main} % fancy page style
-\newgeometry{top=1.8in,left=1.5in,bottom=1.2in,right=1.2in}
+\newgeometry{top=1.5in,left=1in,bottom=1in,right=1in}
 \vspace*{-0.8cm}\flushright À Trois-Rivières, le $date$
 \flushleft
 \smallskip
-$for(addressee)$$addressee$$sep$\\$endfor$\\
+$if(addressee)$
+    $for(addressee)$$addressee$$sep$\\$endfor$\\
+$endif$
+\vspace{.5cm}
+$if(obj)$
+    \underline{Objet :} $obj$\\
+$endif$
 \vspace{1cm}\hspace{.3cm}
 \opening\par

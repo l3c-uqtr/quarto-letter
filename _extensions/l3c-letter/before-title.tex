@@ -135,16 +135,16 @@
     \fancyhf{} % clear the existing header and footer
     % define the header
     \fancyhead[L]{%
-        \begin{textblock*}{2in}[0.3066,0.37](1.5in,1in)
+        \begin{textblock*}{2in}[0.3066,0.37](1.15in,.7in)
             \includegraphics[width=2in]{\logofile}
         \end{textblock*}
-        \begin{textblock*}{6.375in}(1.5in,1.05in) 
+        \begin{textblock*}{6.375in}(1.5in,.75in) 
             \sffamily
             \hfill \color{gray} Département de Psychologie
             \\  \hfill $author$, $qualification$
         \end{textblock*}
         \begin{tikzpicture}[remember picture,overlay]
-          \draw[color=crimson,line width=0.7pt] (current page.north west)+(1.5in,-1in) -- (6.41in,+0.14in);
+          \draw[color=crimson,line width=0.7pt] (current page.north west)+(1.15in,-.7in) -- (6.9in,+0.16in);
         \end{tikzpicture}
     }
     
@@ -156,7 +156,7 @@
     }
     $if(l3c-logo)$
     \fancyfoot[R]{%
-       \begin{textblock*}{2in}(14.6cm, 25.5cm)
+       \begin{textblock*}{2in}(14.6cm, 25.6cm)
             \includegraphics[width=2.2cm]{logoL3C.png}
        \end{textblock*}
     }
